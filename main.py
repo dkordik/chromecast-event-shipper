@@ -9,9 +9,10 @@ import pychromecast
 from pychromecast.controllers.media import MediaStatusListener
 
 class MyMediaStatusListener(MediaStatusListener):
-    def __init__(self, name, cast, api_url):
+    def __init__(self, name, cast, host, api_url):
         self.name = name
         self.cast = cast
+        self.host = host
         self.api_url = api_url
 
     def new_media_status(self, status):
@@ -24,6 +25,7 @@ class MyMediaStatusListener(MediaStatusListener):
         
         payload = {
             'chromecast_name': self.name,
+            'chromecast_host': self.host,
             'media_status': status_dict
         }
 
@@ -52,9 +54,10 @@ if len(casts) == 0:
     sys.exit(1)
 
 for cast in casts:
-    print(f'Found: "{cast.name}" with UUID: {cast.uuid}')
+    host = cast.cast_info.host
+    print(f'Found: "{cast.name}" - host: {host}')
     cast.wait()
-    listenerMedia = MyMediaStatusListener(cast.name, cast, args.api_url)
+    listenerMedia = MyMediaStatusListener(cast.name, cast, host, args.api_url)
     cast.media_controller.register_status_listener(listenerMedia)
 
 input("Listening for Chromecast events...\n\n")
