@@ -12,12 +12,10 @@ Uses the excellent [pychromecast](https://github.com/home-assistant-libs/pychrom
 
 ## Usage
 
-```
-./run.sh
-```
-or update [run.sh](./run.sh) with your preferred host to ship events to:
-```
-python3 main.py --api-url=http://localhost:3002/chromecastEvents
+```sh
+./run.sh --api-url=YOUR_LISTENING_API_ENDPOINT_HERE
+# For example:
+# ./run.sh --api-url=http://localhost:3002/chromecastEvents
 ```
 
 ### Example REST payload:
